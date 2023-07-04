@@ -35,7 +35,8 @@ let header = `  <a href="Index.html"> <div class="logo"> Noticiero para Viajeros
 <li>
     <a href="iniciarSesion.html">Login</a>
 </li>
-    <a href="indexCrud.html">Nuestros Destinos </a>
+<li>
+    <a href="indexCrud.html">Nuestros Destinos</a>
 </li>
 </ul>
 </nav>`

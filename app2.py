@@ -43,7 +43,7 @@ class Producto:
 # Este método permite modificar un producto.
         def modificar(self, nueva_descripcion, nuevo_stock, nuevo_precio):
             self.descripcion = nueva_descripcion # Modifica la descripción
-            self.cantidad = nuevo_stock # Modifica la cantidad
+            self.stock = nuevo_stock # Modifica la cantidad
             self.precio = nuevo_precio # Modifica el precio
 
         def agregar(self, codigo, stock, inventario):
@@ -71,7 +71,7 @@ class Producto:
                 item.stock -= stock
             if item.stock == 0:
                 self.items.remove(item)
-            sql = f'UPDATE productos SET cantidad = cantidad + {stock} WHERE codigo = {codigo};'
+            sql = f'UPDATE productos SET stock = stock + {stock} WHERE codigo = {codigo};'
 
             self.cursor.execute(sql)
             self.conexion.commit()
@@ -89,7 +89,7 @@ class Inventario:
         producto_existente = self.consultar_producto(codigo)
         if producto_existente:
             return jsonify({'message': 'Ya existe un producto con ese código.'}), 400
-        nuevo_producto = Producto(codigo, descripcion, stock, precio)
+
         sql = f'INSERT INTO productos VALUES ({codigo}, "{descripcion}",{stock}, {precio});'
         self.cursor.execute(sql)
         self.conexion.commit()
@@ -104,10 +104,10 @@ class Inventario:
             return Producto(codigo, descripcion, stock, precio)
         return None
 
-    def modificar_producto(self, codigo, nueva_descripcion, nuevo_stock,nuevo_precio):
+    def modificar_producto(self,codigo,nueva_descripcion,nuevo_stock,nuevo_precio):
         producto = self.consultar_producto(codigo)
         if producto:
-            producto.modificar(nueva_descripcion, nuevo_stock,nuevo_precio)
+            producto.modificar(nueva_descripcion,nuevo_stock,nuevo_precio)
 
             sql = f'UPDATE productos SET descripcion = "{nueva_descripcion}",stock = {nuevo_stock}, precio = {nuevo_precio} WHERE codigo ={codigo};'
 
@@ -196,7 +196,7 @@ def obtener_producto(codigo):
         return jsonify({
         'codigo': producto.codigo,
         'descripcion': producto.descripcion,
-        'stock': producto.cantidad,
+        'stock': producto.stock,
         'precio': producto.precio
     }), 200
     return jsonify({'message': 'Producto no encontrado.'}), 404
@@ -213,7 +213,7 @@ def obtener_productos():
 def agregar_producto():
     codigo = request.json.get('codigo')
     descripcion = request.json.get('descripcion')
-    stock = request.json.get('cantidad')
+    stock = request.json.get('stock')
     precio = request.json.get('precio')
     return inventario.agregar_producto(codigo, descripcion, stock,
 precio)
@@ -221,7 +221,7 @@ precio)
 @app.route('/productos/<int:codigo>', methods=['PUT'])
 def modificar_producto(codigo):
     nueva_descripcion = request.json.get('descripcion')
-    nuevo_stock = request.json.get('cantidad')
+    nuevo_stock = request.json.get('stock')
     nuevo_precio = request.json.get('precio')
     return inventario.modificar_producto(codigo, nueva_descripcion,nuevo_stock, nuevo_precio)
 # Ruta para eliminar un producto del inventario
@@ -233,7 +233,7 @@ def eliminar_producto(codigo):
 @app.route('/carrito', methods=['POST'])
 def agregar_carrito():
     codigo = request.json.get('codigo')
-    stock = request.json.get('cantidad')
+    stock = request.json.get('stock')
     inventario = Inventario()
     return carrito.agregar(codigo, stock, inventario)
 
@@ -241,7 +241,7 @@ def agregar_carrito():
 @app.route('/carrito', methods=['DELETE'])
 def quitar_carrito():
     codigo = request.json.get('codigo')
-    stock = request.json.get('cantidad')
+    stock = request.json.get('stock')
     inventario = Inventario()
     return carrito.quitar(codigo, stock, inventario)
 

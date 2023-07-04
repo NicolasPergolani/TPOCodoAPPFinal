@@ -48,7 +48,7 @@
                     codigo: '',
                     mostrarDatosProducto: false,
                     descripcion: '',
-                    cantidad: '',
+                    stock: '',
                     precio: ''
                 }
             },
@@ -64,7 +64,7 @@
                         })
                         .then(data => {
                             this.descripcion = data.descripcion
-                            this.cantidad = data.cantidad
+                            this.stock = data.stock
                             this.precio = data.precio
                             this.mostrarDatosProducto = true
                         })
@@ -76,7 +76,7 @@
                     const producto = {
                         codigo: this.codigo,
                         descripcion: this.descripcion,
-                        cantidad: this.cantidad,
+                        stock: this.stock,
                         precio: this.precio
                     }
 

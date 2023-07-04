@@ -110,7 +110,7 @@
                         },
                         body: JSON.stringify({
                             codigo: producto.codigo,
-                            cantidad: 1, // Agregamos una unidad al carrito
+                            stock: 1, // Agregamos una unidad al carrito
                         }),
                     })
                         .then(response => response.json())
@@ -130,7 +130,7 @@
                         },
                         body: JSON.stringify({
                             codigo: producto.codigo,
-                            cantidad: 1, // Restamos una unidad del carrito
+                            stock: 1, // Restamos una unidad del carrito
                         }),
                     })
                         .then(response => response.json())

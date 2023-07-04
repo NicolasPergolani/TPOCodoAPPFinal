@@ -49,7 +49,7 @@ fetch(URL + 'productos')
                     var fila = document.createElement('tr')
                     fila.innerHTML = '<td>' + producto.codigo + '</td>' +
                         '<td>' + producto.descripcion + '</td>' +
-                        '<td align="right">' + producto.cantidad + '</td>' +
+                        '<td align="right">' + producto.stock + '</td>' +
                         '<td align="right">&nbsp; &nbsp;&nbsp; &nbsp;' + producto.precio + '</td>'
                     tablaProductos.appendChild(fila)
                 })

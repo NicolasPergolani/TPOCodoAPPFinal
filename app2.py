@@ -211,10 +211,20 @@ def obtener_productos():
 # Ruta para agregar un producto al inventario
 @app.route('/productos', methods=['POST'])
 def agregar_producto():
+    
+    codigo = request.json['codigo']
+    descripcion = request.json['descripcion']
+    stock = request.json['stock']
+    precio = request.json['precio']
+    
+    """
+        PROBANDO SIN EL GET
     codigo = request.json.get('codigo')
     descripcion = request.json.get('descripcion')
     stock = request.json.get('stock')
     precio = request.json.get('precio')
+    """ 
+    
     return inventario.agregar_producto(codigo, descripcion, stock,
 precio)
 # Ruta para modificar un producto del inventario

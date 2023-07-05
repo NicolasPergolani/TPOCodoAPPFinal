@@ -35,18 +35,18 @@ create_database()
 
 class Producto:
     # Definimos el constructor e inicializamos los atributos de instancia
-        def __init__(self, codigo, descripcion, stock, precio):
+    def __init__(self, codigo, descripcion, stock, precio):
             self.codigo = codigo # Código
             self.descripcion = descripcion # Descripción
             self.stock = stock # Cantidad disponible (stock)
             self.precio = precio # Precio
 # Este método permite modificar un producto.
-        def modificar(self, nueva_descripcion, nuevo_stock, nuevo_precio):
+    def modificar(self, nueva_descripcion, nuevo_stock, nuevo_precio):
             self.descripcion = nueva_descripcion # Modifica la descripción
             self.stock = nuevo_stock # Modifica la cantidad
             self.precio = nuevo_precio # Modifica el precio
 
-        def agregar(self, codigo, stock, inventario):
+    def agregar(self, codigo, stock, inventario):
             producto = inventario.consultar_producto(codigo)
             if producto is False:
                 print("El producto no existe.")
@@ -62,7 +62,7 @@ class Producto:
                 self.conexion.commit()
             return True
 
-        def quitar(self, codigo, stock, inventario):
+    def quitar(self, codigo, stock, inventario):
             for item in self.items:
                 if item.codigo == codigo:
                     if stock > item.stock:
@@ -212,18 +212,12 @@ def obtener_productos():
 @app.route('/productos', methods=['POST'])
 def agregar_producto():
     
-    codigo = request.json['codigo']
-    descripcion = request.json['descripcion']
-    stock = request.json['stock']
-    precio = request.json['precio']
-    
-    """
-        PROBANDO SIN EL GET
+   
     codigo = request.json.get('codigo')
     descripcion = request.json.get('descripcion')
     stock = request.json.get('stock')
     precio = request.json.get('precio')
-    """ 
+    
     
     return inventario.agregar_producto(codigo, descripcion, stock,
 precio)
